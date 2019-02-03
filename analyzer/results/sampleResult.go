@@ -2,8 +2,7 @@ package results
 
 // SampleResult contains the results from one sample
 type SampleResult struct {
-	Index  int
-	Errors int
-	Total  int
-	Single bool
+	Index       int
+	Single      bool
+	LociResults []LociResult
 }
