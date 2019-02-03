@@ -1,6 +1,7 @@
 package analyzer
 
 import (
+	"errors"
 	"karim/microsatellite_analyzer/analyzer/models"
 	"karim/microsatellite_analyzer/analyzer/results"
 )
@@ -13,6 +14,19 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 
 	if len(sampleArray) == 0 {
 		return result, nil
+	}
+
+	//Validate loci names
+	lociNameCounts := make(map[string]bool)
+	firstSample := sampleArray[0]
+	firstSampleFirstReplica := firstSample.ReplicaArray[0]
+
+	for _, locus := range firstSampleFirstReplica.LocusArray {
+		if _, found := lociNameCounts[locus.Name]; found {
+			return result, errors.New("Multiple same loci names found. Loci names must be unique")
+		}
+
+		lociNameCounts[locus.Name] = true
 	}
 
 	result.ReplicateAmount = 0

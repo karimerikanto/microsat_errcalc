@@ -308,5 +308,43 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsOneSing
 	test.AreEqual(t, "Afa05", result.LociOrder[0], "First loci order name was incorrect")
 	test.AreEqual(t, "Afa13", result.LociOrder[1], "Second loci order name was incorrect")
 	test.AreEqual(t, "Afa15", result.LociOrder[2], "Thrid loci order name was incorrect")
+}
 
+func TestGetResultFromImportData_ToReturnError_WhenImportDataContainsSameLocusNameTwice(t *testing.T) {
+	importData := models.NewImportData()
+
+	importData.Samples = []models.Sample{
+		models.Sample{
+			ReplicaArray: []models.Replica{
+				models.Replica{
+					Name: "Replica 1",
+					LocusArray: []models.Locus{
+						models.Locus{
+							Name:    "Afa05",
+							Allele1: "182", Allele2: "194",
+						},
+						models.Locus{
+							Name:    "Afa05",
+							Allele1: "219", Allele2: "227",
+						},
+						models.Locus{
+							Name:    "Afa15",
+							Allele1: "239", Allele2: "243",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	result, err := GetResultFromImportData(importData)
+
+	test.AreEqual(t, "Multiple same loci names found. Loci names must be unique", err.Error(), "Error message was incorrect")
+	test.AreEqual(t, 0, result.ReplicateAmount, "Replicate amount was incorrect")
+	test.AreEqual(t, 0, result.SampleAmount, "Sample amount was incorrect")
+	test.AreEqual(t, 0, result.SingleSampleAmount, "Single sample amount was incorrect")
+	test.AreEqual(t, 0, result.AmountOfAlleles, "Amount of alleles was incorrect")
+	test.AreEqual(t, 0, result.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, result.AmountOfLoci, "Amount of loci was incorrect")
+	test.AreEqual(t, 0, result.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 }
