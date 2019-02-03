@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"karim/microsatellite_analyzer/analyzer"
-	"karim/microsatellite_analyzer/analyzer/results"
 	"karim/microsatellite_analyzer/reader"
+	"karim/microsatellite_analyzer/writer"
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
+	"time"
 )
 
 const versionName = "0.1"
@@ -23,29 +22,44 @@ func main() {
 		return
 	}
 	//TODO: Add more dynamic parameter loop
+
+	fmt.Println("Reading file...")
+	fmt.Println("")
+
+	readStartTime := time.Now()
 	filepath := os.Args[1]
 	importData, err := reader.ReadCsvFileToSampleMatrix(filepath)
+	readElapsedTime := time.Since(readStartTime)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
+	fmt.Printf("Got %v samples from the file in %v seconds\n", len(importData.Samples), strconv.FormatFloat(readElapsedTime.Seconds(), 'f', 3, 64))
+	fmt.Println("")
+	fmt.Println("Analyzing...")
+	fmt.Println("")
+
+	analyzeStartTime := time.Now()
 	result, err := analyzer.GetResultFromImportData(importData)
+	analyzeElapsedTime := time.Since(analyzeStartTime)
 
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	resultLines := getResultLinesFromResult(result)
+	fmt.Printf("Analyze completed in %v seconds\n", strconv.FormatFloat(analyzeElapsedTime.Seconds(), 'f', 3, 64))
 
 	if len(os.Args) > 2 {
+		fmt.Println("")
 		outputFileName := os.Args[2]
-		saveResultsToCsvFile(resultLines, currentDirectory+"\\"+outputFileName)
+		writer.WriteResultsToCsvFile(currentDirectory+"\\"+outputFileName, result)
 
 	} else {
-		printResultLinesToConsole(resultLines)
+		fmt.Println("")
+		writer.WriteResultsToConsole(result)
 	}
 }
 
@@ -74,63 +88,4 @@ func printHelp() {
 	fmt.Println("")
 	fmt.Println("Sample2;100;200;100;200;100;200;")
 	fmt.Println("")
-}
-
-func printResultLinesToConsole(resultLines [][]string) {
-	for _, resultLine := range resultLines {
-		fmt.Println(strings.Join(resultLine, " "))
-	}
-}
-
-func saveResultsToCsvFile(resultLines [][]string, filePath string) {
-	if !strings.HasSuffix(filePath, ".csv") {
-		filePath += ".csv"
-	}
-
-	//TODO: Check the file path for security
-
-	fileContents := ""
-
-	for _, resultLine := range resultLines {
-		fileContents += strings.Join(resultLine, ";") + "\n"
-	}
-
-	fmt.Println("Writing output file to " + filePath)
-	err := ioutil.WriteFile(filePath, []byte(fileContents), 0777)
-
-	if err != nil {
-		fmt.Println("Couldn't write the output file. Check the error.")
-		fmt.Println(err)
-	}
-}
-
-func getResultLinesFromResult(result results.Result) [][]string {
-	var resultLines = [][]string{
-		{
-			"Replicate amount", strconv.Itoa(result.ReplicateAmount),
-		},
-		{
-			"Sample amount", strconv.Itoa(result.SampleAmount),
-		},
-		{
-			"Single sample amount", strconv.Itoa(result.SingleSampleAmount),
-		},
-		{},
-	}
-
-	for _, sampleResult := range result.SampleResults {
-		if sampleResult.Single {
-			resultLines = append(resultLines, []string{
-				"Replicate " + strconv.Itoa(sampleResult.Index) + " (Single)",
-			})
-		} else {
-			resultLines = append(resultLines, []string{
-				"Replicate " + strconv.Itoa(sampleResult.Index),
-			})
-		}
-
-		resultLines = append(resultLines, []string{})
-	}
-
-	return resultLines
 }
