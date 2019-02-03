@@ -195,16 +195,38 @@ func TestReadCsvDataMatrixToImportData_ToReturnNoHeadersAndOneSample_WhenInputMa
 	test.AreEqual(t, "240", replica2.LocusArray[1].Allele2, "Wrong allele 2 value for second locus in replica 2")
 }
 
-func TestReadCsvDataMatrixToImportData_ToReturnError_WhenInputMatrixContainsWrongAmountOfSampleColumnsAndLociNames(t *testing.T) {
+func TestReadCsvDataMatrixToImportData_ToReturnOneSampleWithOneReplica_WhenInputMatrixContainsWrongAmountOfSampleColumnsAndLociNames(t *testing.T) {
 	dataLines := [][]string{
-		{"", "Locus 1", "", "Locus 2"},
-		{"Replica 1", "100", "120", "200", "210", "100", "100"},
+		{"", "Locus 1", "", "Locus 2", "", "Locus 3"},
+		{"Replica 1", "100", "120", "200", "210"},
 	}
 
 	importData, err := readCsvDataMatrixToImportData(dataLines)
 
-	test.AreEqual(t, "Locus index isn't matching with the locus name indexes on line 1", err.Error(), "Error messagewas incorrect")
+	test.AreEqual(t, nil, err, "Error was not null")
 
 	test.AreEqual(t, 0, len(importData.Headers), "Wrong amount of headers")
-	test.AreEqual(t, 0, len(importData.Samples), "Wrong amount of samples")
+	test.AreEqual(t, 1, len(importData.Samples), "Wrong amount of samples")
+
+	sample := importData.Samples[0]
+
+	test.AreEqual(t, 1, len(sample.ReplicaArray), "Wrong amount of replicas in sample")
+
+	//Replica 1
+	replica1 := sample.ReplicaArray[0]
+
+	test.AreEqual(t, "Replica 1", replica1.Name, "Wrong replica name for replica 1")
+	test.AreEqual(t, 3, len(replica1.LocusArray), "Wrong amount of loci in replica 1")
+
+	test.AreEqual(t, "Locus 1", replica1.LocusArray[0].Name, "Wrong name for first locus in replica 1")
+	test.AreEqual(t, "100", replica1.LocusArray[0].Allele1, "Wrong allele 1 value for first locus in replica 1")
+	test.AreEqual(t, "120", replica1.LocusArray[0].Allele2, "Wrong allele 2 value for first locus in replica 1")
+
+	test.AreEqual(t, "Locus 2", replica1.LocusArray[1].Name, "Wrong name for second locus in replica 1")
+	test.AreEqual(t, "200", replica1.LocusArray[1].Allele1, "Wrong allele 1 value for second locus in replica 1")
+	test.AreEqual(t, "210", replica1.LocusArray[1].Allele2, "Wrong allele 2 value for second locus in replica 1")
+
+	test.AreEqual(t, "Locus 3", replica1.LocusArray[2].Name, "Wrong name for second locus in replica 1")
+	test.AreEqual(t, "", replica1.LocusArray[2].Allele1, "Wrong allele 1 value for second locus in replica 1")
+	test.AreEqual(t, "", replica1.LocusArray[2].Allele2, "Wrong allele 2 value for second locus in replica 1")
 }

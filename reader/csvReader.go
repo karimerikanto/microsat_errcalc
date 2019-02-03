@@ -3,12 +3,10 @@ package reader
 import (
 	"bufio"
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"io"
 	"karim/microsatellite_analyzer/analyzer/models"
 	"os"
-	"strconv"
 )
 
 //Read states
@@ -83,7 +81,6 @@ func readCsvDataMatrixToImportData(dataLines [][]string) (*models.ImportData, er
 			}
 
 			headers = append(headers, dataLine)
-			//TODO: Collect headers here if needed
 			break
 		locusCase:
 			fallthrough
@@ -171,19 +168,17 @@ func isSampleRow(lineDatas []string) bool {
 
 func readLocusArray(lineDatas []string, locusNames []string, lineDataIndex int) ([]models.Locus, error) {
 	var locusArray []models.Locus
-	amountOfLociInDataLine := (len(lineDatas) - 1) / 2
-
-	if len(locusNames) < amountOfLociInDataLine {
-		return nil, errors.New("Locus index isn't matching with the locus name indexes on line " + strconv.Itoa(lineDataIndex))
-	}
 
 	for i := 0; i < len(locusNames); i++ {
 		locusIndex := (i * 2) + 1
 
 		locus := models.Locus{
-			Name:    locusNames[i],
-			Allele1: lineDatas[locusIndex],
-			Allele2: lineDatas[locusIndex+1],
+			Name: locusNames[i],
+		}
+
+		if locusIndex < len(lineDatas) {
+			locus.Allele1 = lineDatas[locusIndex]
+			locus.Allele2 = lineDatas[locusIndex+1]
 		}
 
 		locusArray = append(locusArray, locus)
