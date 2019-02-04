@@ -19,7 +19,31 @@ func TestCreateLociResult_ToReturnEmptyLociResult_WhenOnlyOneLocusIsGiven(t *tes
 
 	test.AreEqual(t, "Locus1", lociResult.Name, "Loci result name was incorrect")
 	test.AreEqual(t, false, lociResult.Ambiguous, "Loci result ambiguous state was incorrect")
-	test.AreEqual(t, 2, lociResult.AmountOfAlleles, "Amount of alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfAlleles, "Amount of alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, "", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
+	test.AreEqual(t, "", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+}
+
+func TestCreateLociResult_ToReturnEmptyLociResult_WhenTwoLociAreGivenButOtherIsEmpty(t *testing.T) {
+	loci := []models.Locus{
+		models.Locus{
+			Name:    "Locus1",
+			Allele1: "100",
+			Allele2: "200",
+		},
+		models.Locus{
+			Name:    "Locus1",
+			Allele1: "",
+			Allele2: "",
+		},
+	}
+
+	lociResult := CreateLociResult("Locus1", loci)
+
+	test.AreEqual(t, "Locus1", lociResult.Name, "Loci result name was incorrect")
+	test.AreEqual(t, false, lociResult.Ambiguous, "Loci result ambiguous state was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfAlleles, "Amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")

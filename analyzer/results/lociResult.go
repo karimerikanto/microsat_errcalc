@@ -23,6 +23,18 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 	lociResult.AmountOfErroneousAlleles = 0
 	lociResult.Ambiguous = false
 
+	filledAlleles := 0
+
+	for _, locus := range loci {
+		if !locus.IsEmpty() {
+			filledAlleles++
+		}
+	}
+
+	if filledAlleles < 2 {
+		return lociResult
+	}
+
 	//Find the most prevalent alleles
 	allele1PrevalentCandidates := make(map[string]int)
 	allele2PrevalentCandidates := make(map[string]int)
