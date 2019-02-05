@@ -151,14 +151,16 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 
 	lociResult := lociResults[0]
 	test.AreEqual(t, "Afa05", lociResult.Name, "First loci group first result name was incorrect")
-	test.AreEqual(t, 6, lociResult.AmountOfAlleles, "First loci group first result amount of alleles was incorrect")
+	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "First loci group first result amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "First loci group first result total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "First loci group first result amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "182", lociResult.PrevalentAllele1, "First loci group first result first prevalent allele was incorrect")
 	test.AreEqual(t, "194", lociResult.PrevalentAllele2, "First loci group first result second prevalent allele was incorrect")
 
 	lociResult = lociResults[1]
 	test.AreEqual(t, "Afa05", lociResult.Name, "First loci group second result name was incorrect")
-	test.AreEqual(t, 4, lociResult.AmountOfAlleles, "First loci group second result amount of alleles was incorrect")
+	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "First loci group second result amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "First loci group second result total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "First loci group second result amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "182", lociResult.PrevalentAllele1, "First loci group second result first prevalent allele was incorrect")
 	test.AreEqual(t, "194", lociResult.PrevalentAllele2, "First loci group second result second prevalent allele was incorrect")
@@ -169,14 +171,16 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 
 	lociResult = lociResults[0]
 	test.AreEqual(t, "Afa13", lociResult.Name, "Second loci group first result name was incorrect")
-	test.AreEqual(t, 6, lociResult.AmountOfAlleles, "Second loci group first result amount of alleles was incorrect")
+	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "Second loci group first result amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "Second loci group first result total amount of alleles was incorrect")
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousAlleles, "Second loci group first result amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "219", lociResult.PrevalentAllele1, "Second loci group first result first prevalent allele was incorrect")
 	test.AreEqual(t, "227", lociResult.PrevalentAllele2, "Second loci group first result second prevalent allele was incorrect")
 
 	lociResult = lociResults[1]
 	test.AreEqual(t, "Afa13", lociResult.Name, "Second loci group second result name was incorrect")
-	test.AreEqual(t, 4, lociResult.AmountOfAlleles, "Second loci group second result amount of alleles was incorrect")
+	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Second loci group second result amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Second loci group second result total amount of alleles was incorrect")
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousAlleles, "Second loci group second result amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "219", lociResult.PrevalentAllele1, "Second loci group second result first prevalent allele was incorrect")
 	test.AreEqual(t, "227", lociResult.PrevalentAllele2, "Second loci group second result second prevalent allele was incorrect")
@@ -187,14 +191,16 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 
 	lociResult = lociResults[0]
 	test.AreEqual(t, "Afa15", lociResult.Name, "Third loci group first result name was incorrect")
-	test.AreEqual(t, 6, lociResult.AmountOfAlleles, "Third loci group first result amount of alleles was incorrect")
+	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "Third loci group first result amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "Third loci group first result total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Third loci group first result amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "239", lociResult.PrevalentAllele1, "Third loci group first result first prevalent allele was incorrect")
 	test.AreEqual(t, "243", lociResult.PrevalentAllele2, "Third loci group first result second prevalent allele was incorrect")
 
 	lociResult = lociResults[1]
 	test.AreEqual(t, "Afa15", lociResult.Name, "Third loci group second result name was incorrect")
-	test.AreEqual(t, 4, lociResult.AmountOfAlleles, "Third loci group second result amount of alleles was incorrect")
+	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Third loci group second result amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Third loci group second result total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Third loci group second result amount of erroneous alleles was incorrect")
 	test.AreEqual(t, "239", lociResult.PrevalentAllele1, "Third loci group second result first prevalent allele was incorrect")
 	test.AreEqual(t, "243", lociResult.PrevalentAllele2, "Third loci group second result second prevalent allele was incorrect")
@@ -212,7 +218,8 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//First sample result loci result
 	lociResult = sampleResult.LociResults[0]
 	test.AreEqual(t, "Afa05", lociResult.Name, "First loci result name was incorrect in first sample result")
-	test.AreEqual(t, 6, lociResult.AmountOfAlleles, "First loci result amount of alleles was incorrect in first sample result")
+	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "First loci result amount of alleles for error calculation was incorrect in first sample result")
+	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "First loci result total amount of alleles was incorrect in first sample result")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "First loci result amount of erroneous alleles was incorrect in first sample result")
 	test.AreEqual(t, "182", lociResult.PrevalentAllele1, "First loci result first prevalent allele was incorrect in first sample result")
 	test.AreEqual(t, "194", lociResult.PrevalentAllele2, "First loci result second prevalent allele was incorrect in first sample result")
@@ -220,7 +227,8 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//Second sample result loci result
 	lociResult = sampleResult.LociResults[1]
 	test.AreEqual(t, "Afa13", lociResult.Name, "Second loci result name was incorrect in first sample result")
-	test.AreEqual(t, 6, lociResult.AmountOfAlleles, "Second loci result amount of alleles was incorrect in first sample result")
+	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "Second loci result amount of alleles for error calculation was incorrect in first sample result")
+	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "Second loci result total amount of alleles was incorrect in first sample result")
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousAlleles, "Second loci result amount of erroneous alleles was incorrect in first sample result")
 	test.AreEqual(t, "219", lociResult.PrevalentAllele1, "Second loci result first prevalent allele was incorrect in first sample result")
 	test.AreEqual(t, "227", lociResult.PrevalentAllele2, "Second loci result second prevalent allele was incorrect in first sample result")
@@ -228,7 +236,8 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//Third sample result loci result
 	lociResult = sampleResult.LociResults[2]
 	test.AreEqual(t, "Afa15", lociResult.Name, "Third loci result name was incorrect in first sample result")
-	test.AreEqual(t, 6, lociResult.AmountOfAlleles, "Third loci result amount of alleles was incorrect in first sample result")
+	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "Third loci result amount of alleles for error calculation was incorrect in first sample result")
+	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "Third loci result total amount of alleles was incorrect in first sample result")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Third loci result amount of erroneous alleles was incorrect in first sample result")
 	test.AreEqual(t, "239", lociResult.PrevalentAllele1, "Third loci result first prevalent allele was incorrect in first sample result")
 	test.AreEqual(t, "243", lociResult.PrevalentAllele2, "Third loci result second prevalent allele was incorrect in first sample result")
@@ -243,7 +252,8 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//First sample result loci result
 	lociResult = sampleResult.LociResults[0]
 	test.AreEqual(t, "Afa05", lociResult.Name, "First loci result name was incorrect in second sample result")
-	test.AreEqual(t, 4, lociResult.AmountOfAlleles, "First loci result amount of alleles was incorrect in second sample result")
+	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "First loci result amount of alleles for error calculation was incorrect in second sample result")
+	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "First loci result total amount of alleles was incorrect in second sample result")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "First loci result amount of erroneous alleles was incorrect in second sample result")
 	test.AreEqual(t, "182", lociResult.PrevalentAllele1, "First loci result first prevalent allele was incorrect in second sample result")
 	test.AreEqual(t, "194", lociResult.PrevalentAllele2, "First loci result second prevalent allele was incorrect in second sample result")
@@ -251,7 +261,8 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//Second sample result loci result
 	lociResult = sampleResult.LociResults[1]
 	test.AreEqual(t, "Afa13", lociResult.Name, "Second loci result name was incorrect in second sample result")
-	test.AreEqual(t, 4, lociResult.AmountOfAlleles, "Second loci result amount of alleles was incorrect in second sample result")
+	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Second loci result amount of alleles for error calculation was incorrect in second sample result")
+	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Second loci result total amount of alleles was incorrect in second sample result")
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousAlleles, "Second loci result amount of erroneous alleles was incorrect in second sample result")
 	test.AreEqual(t, "219", lociResult.PrevalentAllele1, "Second loci result first prevalent allele was incorrect in second sample result")
 	test.AreEqual(t, "227", lociResult.PrevalentAllele2, "Second loci result second prevalent allele was incorrect in second sample result")
@@ -259,7 +270,8 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//Third sample result loci result
 	lociResult = sampleResult.LociResults[2]
 	test.AreEqual(t, "Afa15", lociResult.Name, "Third loci result name was incorrect in second sample result")
-	test.AreEqual(t, 4, lociResult.AmountOfAlleles, "Third loci result amount of alleles was incorrect in second sample result")
+	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Third loci result amount of alleles for error calculation was incorrect in second sample result")
+	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Third loci result total amount of alleles was incorrect in second sample result")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Third loci result amount of erroneous alleles was incorrect in second sample result")
 	test.AreEqual(t, "239", lociResult.PrevalentAllele1, "Third loci result first prevalent allele was incorrect in second sample result")
 	test.AreEqual(t, "243", lociResult.PrevalentAllele2, "Third loci result second prevalent allele was incorrect in second sample result")

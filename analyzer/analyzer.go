@@ -105,8 +105,8 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 				lociResult := results.CreateLociResult(locusName, loci)
 				sampleResult.LociResults = append(sampleResult.LociResults, lociResult)
 
-				result.AmountOfAlleles += lociResult.AmountOfAlleles
-				result.AmountOfAllelesForErrorCalculation += lociResult.AmountOfAlleles
+				result.AmountOfAlleles += lociResult.TotalAmountOfAlleles
+				result.AmountOfAllelesForErrorCalculation += lociResult.AmountOfAllelesForErrorCalculation
 				result.AmountOfErroneousAlleles += lociResult.AmountOfErroneousAlleles
 				result.AmountOfLoci += len(loci)
 
