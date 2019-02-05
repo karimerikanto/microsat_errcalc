@@ -23,7 +23,7 @@ func TestGetResultFromImportData_ToReturnNothing_WhenImportDataIsEmpty(t *testin
 	test.AreEqual(t, 0, result.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 0, len(result.LociResults), "Amount of loci results was incorrect")
 	test.AreEqual(t, 0, len(result.SampleResults), "Sample results amount was incorrect")
-	test.AreEqual(t, 0, len(result.LociOrder), "Amount of loci orders was incorrect")
+	test.AreEqual(t, 0, len(result.LociNamesInOrder), "Amount of loci orders was incorrect")
 }
 
 func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSampleIncludingSevenReplicas(t *testing.T) {
@@ -137,10 +137,10 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	test.AreEqual(t, 30, result.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 
 	//Loci orders
-	test.AreEqual(t, 3, len(result.LociOrder), "Amount of loci orders was incorrect")
-	test.AreEqual(t, "Afa05", result.LociOrder[0], "First loci order name was incorrect")
-	test.AreEqual(t, "Afa13", result.LociOrder[1], "Second loci order name was incorrect")
-	test.AreEqual(t, "Afa15", result.LociOrder[2], "Thrid loci order name was incorrect")
+	test.AreEqual(t, 3, len(result.LociNamesInOrder), "Amount of loci orders was incorrect")
+	test.AreEqual(t, "Afa05", result.LociNamesInOrder[0], "First loci order name was incorrect")
+	test.AreEqual(t, "Afa13", result.LociNamesInOrder[1], "Second loci order name was incorrect")
+	test.AreEqual(t, "Afa15", result.LociNamesInOrder[2], "Thrid loci order name was incorrect")
 
 	//Loci results
 	test.AreEqual(t, 3, len(result.LociResults), "Amount of loci results was incorrect")
@@ -316,10 +316,10 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsOneSing
 	test.AreEqual(t, 0, result.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 
 	//Loci orders
-	test.AreEqual(t, 3, len(result.LociOrder), "Amount of loci orders was incorrect")
-	test.AreEqual(t, "Afa05", result.LociOrder[0], "First loci order name was incorrect")
-	test.AreEqual(t, "Afa13", result.LociOrder[1], "Second loci order name was incorrect")
-	test.AreEqual(t, "Afa15", result.LociOrder[2], "Thrid loci order name was incorrect")
+	test.AreEqual(t, 3, len(result.LociNamesInOrder), "Amount of loci orders was incorrect")
+	test.AreEqual(t, "Afa05", result.LociNamesInOrder[0], "First loci order name was incorrect")
+	test.AreEqual(t, "Afa13", result.LociNamesInOrder[1], "Second loci order name was incorrect")
+	test.AreEqual(t, "Afa15", result.LociNamesInOrder[2], "Thrid loci order name was incorrect")
 }
 
 func TestGetResultFromImportData_ToReturnError_WhenImportDataContainsSameLocusNameTwice(t *testing.T) {

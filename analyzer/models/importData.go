@@ -15,7 +15,7 @@ func NewImportData() *ImportData {
 	return importData
 }
 
-// AppendLoci appends new loci to the existing loci group
+// AppendLoci adds new loci to the existing loci group
 func (importData ImportData) AppendLoci(loci []Locus) {
 	for _, locus := range loci {
 		if _, ok := importData.LociGroups[locus.Name]; ok {

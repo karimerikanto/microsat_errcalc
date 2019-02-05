@@ -49,7 +49,7 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 		if !lociOrdersFilled {
 			for _, replica := range sample.ReplicaArray {
 				for _, locus := range replica.LocusArray {
-					result.LociOrder = append(result.LociOrder, locus.Name)
+					result.LociNamesInOrder = append(result.LociNamesInOrder, locus.Name)
 				}
 
 				break
@@ -83,20 +83,7 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 		}
 
 		// Flip locuses and replicas
-		locusArrayLength := len(sample.ReplicaArray[0].LocusArray)
-		flippedSampleLocusArray := make([][]models.Locus, locusArrayLength)
-
-		for locusIndex := 0; locusIndex < locusArrayLength; locusIndex++ {
-			flippedSampleLocusArray[locusIndex] = make([]models.Locus, len(sample.ReplicaArray))
-		}
-
-		for replicaIndex := 0; replicaIndex < len(sample.ReplicaArray); replicaIndex++ {
-			replica := sample.ReplicaArray[replicaIndex]
-
-			for locusIndex := 0; locusIndex < len(replica.LocusArray); locusIndex++ {
-				flippedSampleLocusArray[locusIndex][replicaIndex] = replica.LocusArray[locusIndex]
-			}
-		}
+		flippedSampleLocusArray := getFlippedLocusArrayUsingReplicaArray(sample.ReplicaArray[0].LocusArray, sample.ReplicaArray)
 
 		// Create loci results for samples and for the whole result
 		for _, loci := range flippedSampleLocusArray {
@@ -122,4 +109,24 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 	}
 
 	return result, nil
+}
+
+func getFlippedLocusArrayUsingReplicaArray(loci []models.Locus, replicas []models.Replica) [][]models.Locus {
+
+	locusArrayLength := len(loci)
+	flippedSampleLocusArray := make([][]models.Locus, locusArrayLength)
+
+	for locusIndex := 0; locusIndex < locusArrayLength; locusIndex++ {
+		flippedSampleLocusArray[locusIndex] = make([]models.Locus, len(replicas))
+	}
+
+	for replicaIndex := 0; replicaIndex < len(replicas); replicaIndex++ {
+		replica := replicas[replicaIndex]
+
+		for locusIndex := 0; locusIndex < len(replica.LocusArray); locusIndex++ {
+			flippedSampleLocusArray[locusIndex][replicaIndex] = replica.LocusArray[locusIndex]
+		}
+	}
+
+	return flippedSampleLocusArray
 }

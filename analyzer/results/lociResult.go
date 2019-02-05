@@ -42,36 +42,8 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 	}
 
 	lociResult.AmountOfAlleleDropOuts = getAlleleDropOutAmount(loci)
-
-	//Find the most prevalent alleles
-	allele1PrevalentCandidates := make(map[string]int)
-	allele2PrevalentCandidates := make(map[string]int)
-
-	for _, locus := range loci {
-		if len(locus.Allele1) > 0 {
-			lociResult.AmountOfAllelesForErrorCalculation++
-
-			if locus.Allele1 != "?" {
-				if _, ok := allele1PrevalentCandidates[locus.Allele1]; ok {
-					allele1PrevalentCandidates[locus.Allele1]++
-				} else {
-					allele1PrevalentCandidates[locus.Allele1] = 1
-				}
-			}
-		}
-
-		if len(locus.Allele2) > 0 {
-			lociResult.AmountOfAllelesForErrorCalculation++
-
-			if locus.Allele2 != "?" {
-				if _, ok := allele2PrevalentCandidates[locus.Allele2]; ok {
-					allele2PrevalentCandidates[locus.Allele2]++
-				} else {
-					allele2PrevalentCandidates[locus.Allele2] = 1
-				}
-			}
-		}
-	}
+	allele1PrevalentCandidates, allele2PrevalentCandidates := getPrevalentAlleleCandidates(loci)
+	lociResult.AmountOfAllelesForErrorCalculation = getAmountOfAllelesForErrorCalculation(loci)
 
 	if len(loci) < 2 {
 		return lociResult
@@ -82,21 +54,17 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 
 	//Solve ambiguous prevalent alleles using other prevalent allele if found
 	if prevalentAllele1Ambiguous && !prevalentAllele2Ambiguous {
-		for allele1PrevalentCandidate, allele1PrevalentCandidateCount := range allele1PrevalentCandidates {
-			if allele1PrevalentCandidateCount == prevalentAllele1MaxCount &&
-				allele1PrevalentCandidate != prevalentAllele2 {
-				prevalentAllele1 = allele1PrevalentCandidate
-			}
-		}
+		prevalentAllele1 = solvePrevalentAlleleUsingOtherPrevalentAllele(
+			allele1PrevalentCandidates,
+			prevalentAllele1MaxCount,
+			prevalentAllele2)
 
 		lociResult.Ambiguous = true
 	} else if !prevalentAllele1Ambiguous && prevalentAllele2Ambiguous {
-		for allele2PrevalentCandidate, allele2PrevalentCandidateCount := range allele2PrevalentCandidates {
-			if allele2PrevalentCandidateCount == prevalentAllele2MaxCount &&
-				allele2PrevalentCandidate != prevalentAllele1 {
-				prevalentAllele2 = allele2PrevalentCandidate
-			}
-		}
+		prevalentAllele2 = solvePrevalentAlleleUsingOtherPrevalentAllele(
+			allele2PrevalentCandidates,
+			prevalentAllele2MaxCount,
+			prevalentAllele1)
 
 		lociResult.Ambiguous = true
 	} else if prevalentAllele1Ambiguous && prevalentAllele2Ambiguous {
@@ -104,25 +72,97 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 	}
 
 	//Count errors
-	for _, locus := range loci {
-		if len(locus.Allele1) > 0 &&
-			locus.Allele1 != "?" &&
-			locus.Allele1 != prevalentAllele1 {
-			lociResult.AmountOfErroneousAlleles++
-		}
-
-		if len(locus.Allele2) > 0 &&
-			locus.Allele2 != "?" &&
-			locus.Allele2 != prevalentAllele2 {
-			lociResult.AmountOfErroneousAlleles++
-		}
-
-	}
+	lociResult.AmountOfErroneousAlleles = calculateErrorAmountFromLoci(loci, prevalentAllele1, prevalentAllele2)
 
 	lociResult.PrevalentAllele1 = prevalentAllele1
 	lociResult.PrevalentAllele2 = prevalentAllele2
 
 	return lociResult
+}
+
+func getAmountOfAllelesForErrorCalculation(loci []models.Locus) int {
+	count := 0
+
+	for _, locus := range loci {
+		if len(locus.Allele1) > 0 {
+			count++
+		}
+
+		if len(locus.Allele2) > 0 {
+			count++
+		}
+	}
+
+	return count
+}
+
+func getPrevalentAlleleCandidates(loci []models.Locus) (map[string]int, map[string]int) {
+	allele1Candidates := make(map[string]int)
+	allele2Candidates := make(map[string]int)
+
+	for _, locus := range loci {
+		if len(locus.Allele1) > 0 {
+			//lociResult.AmountOfAllelesForErrorCalculation++
+
+			if locus.Allele1 != "?" {
+				if _, ok := allele1Candidates[locus.Allele1]; ok {
+					allele1Candidates[locus.Allele1]++
+				} else {
+					allele1Candidates[locus.Allele1] = 1
+				}
+			}
+		}
+
+		if len(locus.Allele2) > 0 {
+			//lociResult.AmountOfAllelesForErrorCalculation++
+
+			if locus.Allele2 != "?" {
+				if _, ok := allele2Candidates[locus.Allele2]; ok {
+					allele2Candidates[locus.Allele2]++
+				} else {
+					allele2Candidates[locus.Allele2] = 1
+				}
+			}
+		}
+	}
+
+	return allele1Candidates, allele2Candidates
+}
+
+func solvePrevalentAlleleUsingOtherPrevalentAllele(
+	alleleCandidates map[string]int,
+	prevalentAlleleMaxCount int,
+	otherSolvedPrevalentAllele string) string {
+	prevalentAllele := ""
+
+	for allelePrevalentCandidate, allelePrevalentCandidateCount := range alleleCandidates {
+		if allelePrevalentCandidateCount == prevalentAlleleMaxCount &&
+			allelePrevalentCandidate != otherSolvedPrevalentAllele {
+			prevalentAllele = allelePrevalentCandidate
+		}
+	}
+
+	return prevalentAllele
+}
+
+func calculateErrorAmountFromLoci(loci []models.Locus, prevalentAllele1 string, prevalentAllele2 string) int {
+	errorCount := 0
+
+	for _, locus := range loci {
+		if len(locus.Allele1) > 0 &&
+			locus.Allele1 != "?" &&
+			locus.Allele1 != prevalentAllele1 {
+			errorCount++
+		}
+
+		if len(locus.Allele2) > 0 &&
+			locus.Allele2 != "?" &&
+			locus.Allele2 != prevalentAllele2 {
+			errorCount++
+		}
+	}
+
+	return errorCount
 }
 
 func getPrevalentAlleleResults(allelePrevalentCandidates map[string]int) (string, bool, int) {

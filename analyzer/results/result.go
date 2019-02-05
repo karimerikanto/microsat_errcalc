@@ -2,9 +2,9 @@ package results
 
 // Result contains the results from the analyzation
 type Result struct {
-	SampleResults []SampleResult
-	LociResults   map[string][]LociResult
-	LociOrder     []string
+	SampleResults    []SampleResult
+	LociResults      map[string][]LociResult
+	LociNamesInOrder []string
 
 	ReplicateAmount    int
 	SampleAmount       int

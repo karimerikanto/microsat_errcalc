@@ -74,7 +74,7 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 	rows = append(rows, "LOCI")
 	rows = append(rows, "")
 
-	for _, lociName := range result.LociOrder {
+	for _, lociName := range result.LociNamesInOrder {
 		lociResultGroup := result.LociResults[lociName]
 		lociErrors := 0
 		lociAlleleDropOuts := 0
