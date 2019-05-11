@@ -40,7 +40,7 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 		sample := sampleArray[sampleArrayIndex]
 
 		var sampleResult results.SampleResult
-		sampleResult.Index = sampleArrayIndex + 1
+		sampleResult.Name = "(" + sample.GetReplicaNames() + ")"
 
 		result.ReplicateAmount += len(sample.ReplicaArray)
 		sampleResult.Single = sample.IsSingle()

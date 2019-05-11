@@ -11,6 +11,7 @@ type Result struct {
 	SingleSampleAmount int
 
 	AmountOfLoci                       int
+	AmountOfErroneousLoci              int
 	AmountOfErroneousAlleles           int
 	AmountOfAlleles                    int
 	AmountOfAllelesForErrorCalculation int

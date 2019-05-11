@@ -211,7 +211,7 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//First sample result
 	sampleResult := result.SampleResults[0]
 
-	test.AreEqual(t, 1, sampleResult.Index, "First sample result index was incorrect")
+	test.AreEqual(t, "(Replica 1, Replica 2, Replica 3)", sampleResult.Name, "First sample result name was incorrect")
 	test.AreEqual(t, false, sampleResult.Single, "First sample single state was incorrect")
 	test.AreEqual(t, 3, len(sampleResult.LociResults), "First sample result loci result group amount was incorrect")
 
@@ -245,7 +245,7 @@ func TestGetResultFromImportData_ToReturnValidData_WhenImportDataContainsTwoSamp
 	//Second sample result
 	sampleResult = result.SampleResults[1]
 
-	test.AreEqual(t, 2, sampleResult.Index, "Second sample result index was incorrect")
+	test.AreEqual(t, "(Replica 1, Replica 2)", sampleResult.Name, "Second sample result name was incorrect")
 	test.AreEqual(t, false, sampleResult.Single, "Second sample single state was incorrect")
 	test.AreEqual(t, 3, len(sampleResult.LociResults), "Second sample result loci result group amount was incorrect")
 

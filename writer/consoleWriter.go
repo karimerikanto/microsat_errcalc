@@ -28,7 +28,7 @@ func WriteResultsToConsole(result results.Result) {
 
 	for _, sampleResult := range result.SampleResults {
 		if sampleResult.Single {
-			rows = append(rows, "Sample "+strconv.Itoa(sampleResult.Index)+" (Single)")
+			rows = append(rows, "Sample "+sampleResult.Name+" (Single)")
 
 		} else {
 			sampleErrors := 0
@@ -48,7 +48,7 @@ func WriteResultsToConsole(result results.Result) {
 			}
 
 			rows = append(rows,
-				"Sample "+strconv.Itoa(sampleResult.Index)+" "+
+				"Sample "+sampleResult.Name+" "+
 					strconv.Itoa(sampleAlleleDropOuts)+" "+
 					strconv.FormatFloat(float64(sampleAlleleDropOuts)/float64(sampleAlleles), 'f', 6, 64)+" "+
 					strconv.Itoa(sampleErrors-sampleAlleleDropOuts)+" "+

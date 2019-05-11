@@ -14,6 +14,7 @@ type LociResult struct {
 	TotalAmountOfAlleles               int
 	AmountOfErroneousAlleles           int
 	AmountOfAlleleDropOuts             int
+	AmountOfErroneousLoci              int
 	Ambiguous                          bool
 }
 
