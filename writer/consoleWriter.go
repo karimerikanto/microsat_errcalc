@@ -65,7 +65,11 @@ func WriteResultsToConsole(result results.Result) {
 		rows = append(rows, "")
 	}
 
-	rows = append(rows, "Loci")
+	rows = append(rows, "")
+	rows = append(rows, "Loci total count "+strconv.Itoa(result.AmountOfLoci))
+	rows = append(rows, "Loci total count for error calculation "+strconv.Itoa(result.AmountOfLociForErrorCalculation))
+	rows = append(rows, "Loci error count "+strconv.Itoa(result.AmountOfErroneousLoci))
+	rows = append(rows, "Loci error "+strconv.FormatFloat((float64(result.AmountOfErroneousLoci)/float64(result.AmountOfLociForErrorCalculation)), 'f', 6, 64))
 	rows = append(rows, "")
 
 	for _, lociName := range result.LociNamesInOrder {

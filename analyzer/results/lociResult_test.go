@@ -22,6 +22,7 @@ func TestCreateLociResult_ToReturnEmptyLociResult_WhenOnlyOneLocusIsGiven(t *tes
 	test.AreEqual(t, 0, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 2, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -47,6 +48,7 @@ func TestCreateLociResult_ToReturnEmptyLociResult_WhenTwoLociAreGivenButOtherIsE
 	test.AreEqual(t, 0, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 2, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -77,6 +79,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenWithSameA
 	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -107,6 +110,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenAndOneAll
 	test.AreEqual(t, 6, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 6, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -137,6 +141,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenAndLastLo
 	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -172,6 +177,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndAllele1
 	test.AreEqual(t, 8, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 8, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "120", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -197,6 +203,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenTwoLociAreGivenAndFirstInc
 	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -222,6 +229,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenTwoLociAreGivenAndFirstInc
 	test.AreEqual(t, 4, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 4, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -257,6 +265,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndBothAll
 	test.AreEqual(t, 8, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 8, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }
@@ -297,6 +306,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFiveLociAreGivenAndThreeOf
 	test.AreEqual(t, 10, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 10, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "150", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
@@ -338,6 +348,7 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFiveLociAreGivenAndTwoOfTh
 	test.AreEqual(t, 10, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 10, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, 0, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
@@ -374,7 +385,45 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndTwoOfTh
 	test.AreEqual(t, 8, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
 	test.AreEqual(t, 8, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, 2, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
+	test.AreEqual(t, "150", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
+	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+}
+
+func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndOneOfThemHasTwoAllelleErrors(t *testing.T) {
+	loci := []models.Locus{
+		models.Locus{
+			Name:    "Locus1",
+			Allele1: "50",
+			Allele2: "60",
+		},
+		models.Locus{
+			Name:    "Locus1",
+			Allele1: "150",
+			Allele2: "100",
+		},
+		models.Locus{
+			Name:    "Locus1",
+			Allele1: "150",
+			Allele2: "100",
+		},
+		models.Locus{
+			Name:    "Locus1",
+			Allele1: "150",
+			Allele2: "100",
+		},
+	}
+
+	lociResult := CreateLociResult("Locus1", loci)
+
+	test.AreEqual(t, "Locus1", lociResult.Name, "Loci result name was incorrect")
+	test.AreEqual(t, false, lociResult.Ambiguous, "Loci result ambiguous state was incorrect")
+	test.AreEqual(t, 8, lociResult.AmountOfAllelesForErrorCalculation, "Amount of alleles for error calculation was incorrect")
+	test.AreEqual(t, 8, lociResult.TotalAmountOfAlleles, "Total amount of alleles was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfErroneousAlleles, "Amount of erroneous alleles was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "150", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
 }

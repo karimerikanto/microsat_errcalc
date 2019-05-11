@@ -32,6 +32,8 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 	result.ReplicateAmount = 0
 	result.SingleSampleAmount = 0
 	result.AmountOfAllelesForErrorCalculation = 0
+	result.AmountOfLociForErrorCalculation = 0
+	result.AmountOfErroneousLoci = 0
 	result.SampleAmount = len(sampleArray)
 
 	lociOrdersFilled := false
@@ -96,6 +98,9 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 				result.AmountOfAllelesForErrorCalculation += lociResult.AmountOfAllelesForErrorCalculation
 				result.AmountOfErroneousAlleles += lociResult.AmountOfErroneousAlleles
 				result.AmountOfLoci += len(loci)
+				result.AmountOfLociForErrorCalculation += len(loci)
+
+				result.AmountOfErroneousLoci += lociResult.AmountOfErroneousLoci
 
 				if _, ok := result.LociResults[locusName]; ok {
 					result.LociResults[locusName] = append(result.LociResults[locusName], lociResult)

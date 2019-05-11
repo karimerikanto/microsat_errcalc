@@ -27,6 +27,7 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 	lociResult.TotalAmountOfAlleles = 0
 	lociResult.AmountOfAlleleDropOuts = 0
 	lociResult.AmountOfErroneousAlleles = 0
+	lociResult.AmountOfErroneousLoci = 0
 	lociResult.Ambiguous = false
 
 	filledAlleles := 0
@@ -73,7 +74,10 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 	}
 
 	//Count errors
-	lociResult.AmountOfErroneousAlleles = calculateErrorAmountFromLoci(loci, prevalentAllele1, prevalentAllele2)
+	amountOfErroneousAlleles, amountOfErroneousLoci := calculateAlleleAndLocusErrorAmountFromLoci(loci, prevalentAllele1, prevalentAllele2)
+
+	lociResult.AmountOfErroneousAlleles = amountOfErroneousAlleles
+	lociResult.AmountOfErroneousLoci = amountOfErroneousLoci
 
 	lociResult.PrevalentAllele1 = prevalentAllele1
 	lociResult.PrevalentAllele2 = prevalentAllele2
@@ -146,24 +150,39 @@ func solvePrevalentAlleleUsingOtherPrevalentAllele(
 	return prevalentAllele
 }
 
-func calculateErrorAmountFromLoci(loci []models.Locus, prevalentAllele1 string, prevalentAllele2 string) int {
-	errorCount := 0
+func calculateAlleleAndLocusErrorAmountFromLoci(loci []models.Locus, prevalentAllele1 string, prevalentAllele2 string) (int, int) {
+	alleleErrorCount := 0
+	locusErrorCount := 0
 
 	for _, locus := range loci {
+		locusErrorFound := false
+
 		if len(locus.Allele1) > 0 &&
 			locus.Allele1 != "?" &&
 			locus.Allele1 != prevalentAllele1 {
-			errorCount++
+			alleleErrorCount++
+
+			locusErrorCount++
+			locusErrorFound = true
 		}
 
 		if len(locus.Allele2) > 0 &&
 			locus.Allele2 != "?" &&
 			locus.Allele2 != prevalentAllele2 {
-			errorCount++
+			alleleErrorCount++
+
+			if !locusErrorFound {
+				locusErrorCount++
+			}
+		}
+
+		// Loci error is not calculated from single samples
+		if len(loci) <= 1 {
+			locusErrorCount = 0
 		}
 	}
 
-	return errorCount
+	return alleleErrorCount, locusErrorCount
 }
 
 func getPrevalentAlleleResults(allelePrevalentCandidates map[string]int) (string, bool, int) {
