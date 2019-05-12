@@ -25,6 +25,8 @@ func TestCreateLociResult_ToReturnEmptyLociResult_WhenOnlyOneLocusIsGiven(t *tes
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnEmptyLociResult_WhenTwoLociAreGivenButOtherIsEmpty(t *testing.T) {
@@ -51,6 +53,8 @@ func TestCreateLociResult_ToReturnEmptyLociResult_WhenTwoLociAreGivenButOtherIsE
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenWithSameAlleleValues(t *testing.T) {
@@ -82,6 +86,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenWithSameA
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 3, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenAndOneAlleleIsNotSame(t *testing.T) {
@@ -113,6 +119,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenAndOneAll
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 3, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenAndLastLocusIsEmpty(t *testing.T) {
@@ -144,6 +152,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenThreeLociAreGivenAndLastLo
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndAllele1IsAmbiguous(t *testing.T) {
@@ -180,6 +190,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndAllele1
 	test.AreEqual(t, 2, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "120", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenTwoLociAreGivenAndFirstIncludesQuestionMarks(t *testing.T) {
@@ -206,6 +218,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenTwoLociAreGivenAndFirstInc
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenTwoLociAreGivenAndFirstIncludesQuestionMarkAndValue(t *testing.T) {
@@ -232,6 +246,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenTwoLociAreGivenAndFirstInc
 	test.AreEqual(t, 0, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 1, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndBothAllelesAreAmbiguousButFoundFromOtherPrevalentAllele(t *testing.T) {
@@ -268,6 +284,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndBothAll
 	test.AreEqual(t, 1, lociResult.AmountOfErroneousLoci, "Amount of erroneous loci was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "200", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 4, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenFiveLociAreGivenAndThreeOfThemAreHeterotsygotAndTwoOfThemAreHomotsygot(t *testing.T) {
@@ -310,6 +328,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFiveLociAreGivenAndThreeOf
 	test.AreEqual(t, 2, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "150", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 3, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenFiveLociAreGivenAndTwoOfThemAreHeterotsygotAndThreeOfThemAreHomotsygot(t *testing.T) {
@@ -352,6 +372,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFiveLociAreGivenAndTwoOfTh
 	test.AreEqual(t, 0, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 3, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndTwoOfThemAreHeterotsygotAndTwoOfThemAreHomotsygot(t *testing.T) {
@@ -389,6 +411,8 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndTwoOfTh
 	test.AreEqual(t, 2, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "150", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 2, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }
 
 func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndOneOfThemHasTwoAllelleErrors(t *testing.T) {
@@ -426,4 +450,6 @@ func TestCreateLociResult_ToReturnValidLociResult_WhenFourLociAreGivenAndOneOfTh
 	test.AreEqual(t, 0, lociResult.AmountOfAlleleDropOuts, "Amount of allele drop outs was incorrect")
 	test.AreEqual(t, "150", lociResult.PrevalentAllele1, "Prevalent allele 1 was incorrect")
 	test.AreEqual(t, "100", lociResult.PrevalentAllele2, "Prevalent allele 2 was incorrect")
+	test.AreEqual(t, 4, lociResult.AmountOfHeterozygotes, "Amount of heterozygotes was incorrect")
+	test.AreEqual(t, 0, lociResult.AmountOfHomozygotes, "Amount of homozygotes was incorrect")
 }

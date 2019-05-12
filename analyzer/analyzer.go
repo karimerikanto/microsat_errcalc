@@ -97,10 +97,15 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 				result.AmountOfAlleles += lociResult.TotalAmountOfAlleles
 				result.AmountOfAllelesForErrorCalculation += lociResult.AmountOfAllelesForErrorCalculation
 				result.AmountOfErroneousAlleles += lociResult.AmountOfErroneousAlleles
-				result.AmountOfLoci += len(loci)
-				result.AmountOfLociForErrorCalculation += len(loci)
+				result.AmountOfLoci += lociResult.AmountOfLoci
+				result.AmountOfLociForErrorCalculation += lociResult.AmountOfLociForErrorCalculation
 
 				result.AmountOfErroneousLoci += lociResult.AmountOfErroneousLoci
+
+				result.AmountOfHeterozygotes += lociResult.AmountOfHeterozygotes
+				result.AmountOfHomozygotes += lociResult.AmountOfHomozygotes
+				result.AmountOfAlleleDropouts += lociResult.AmountOfAlleleDropOuts
+				result.AmountOfOtherErrors += lociResult.AmountOfErroneousAlleles - lociResult.AmountOfAlleleDropOuts
 
 				if _, ok := result.LociResults[locusName]; ok {
 					result.LociResults[locusName] = append(result.LociResults[locusName], lociResult)
@@ -111,6 +116,14 @@ func GetResultFromImportData(importData *models.ImportData) (results.Result, err
 		}
 
 		result.SampleResults = append(result.SampleResults, sampleResult)
+
+		result.ErrorRate = float64(result.AmountOfErroneousAlleles) / float64(result.AmountOfAllelesForErrorCalculation)
+		result.AlleleDropoutRatePerHeterozygousLoci = float64(result.AmountOfAlleleDropouts) / float64(result.AmountOfHeterozygotes)
+		result.AlleleDropoutRatePerAllLoci = float64(result.AmountOfAlleleDropouts) / float64(result.AmountOfLociForErrorCalculation)
+		result.AlleleDropoutRatePerAllAlleles = float64(result.AmountOfAlleleDropouts) / float64(result.AmountOfAllelesForErrorCalculation)
+		result.OtherErrorRatePerAllLoci = float64(result.AmountOfErroneousLoci-result.AmountOfAlleleDropouts) / float64(result.AmountOfLociForErrorCalculation)
+		result.OtherErrorRatePerAllAlleles = float64(result.AmountOfOtherErrors) / float64(result.AmountOfAllelesForErrorCalculation)
+		result.LociErrorRate = float64(result.AmountOfErroneousLoci) / float64(result.AmountOfLociForErrorCalculation)
 	}
 
 	return result, nil

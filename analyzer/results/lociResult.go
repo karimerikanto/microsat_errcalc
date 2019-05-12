@@ -15,6 +15,10 @@ type LociResult struct {
 	AmountOfErroneousAlleles           int
 	AmountOfAlleleDropOuts             int
 	AmountOfErroneousLoci              int
+	AmountOfHomozygotes                int
+	AmountOfHeterozygotes              int
+	AmountOfLoci                       int
+	AmountOfLociForErrorCalculation    int
 	Ambiguous                          bool
 }
 
@@ -24,10 +28,14 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 
 	lociResult.Name = name
 	lociResult.AmountOfAllelesForErrorCalculation = 0
+	lociResult.AmountOfLoci = 0
 	lociResult.TotalAmountOfAlleles = 0
 	lociResult.AmountOfAlleleDropOuts = 0
 	lociResult.AmountOfErroneousAlleles = 0
 	lociResult.AmountOfErroneousLoci = 0
+	lociResult.AmountOfHomozygotes = 0
+	lociResult.AmountOfHeterozygotes = 0
+	lociResult.AmountOfLociForErrorCalculation = 0
 	lociResult.Ambiguous = false
 
 	filledAlleles := 0
@@ -36,6 +44,12 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 		if !locus.IsEmpty() {
 			filledAlleles++
 			lociResult.TotalAmountOfAlleles += 2
+		}
+
+		if locus.IsHomozygot() {
+			lociResult.AmountOfHomozygotes++
+		} else if locus.IsHeterozygot() {
+			lociResult.AmountOfHeterozygotes++
 		}
 	}
 
@@ -46,6 +60,8 @@ func CreateLociResult(name string, loci []models.Locus) LociResult {
 	lociResult.AmountOfAlleleDropOuts = getAlleleDropOutAmount(loci)
 	allele1PrevalentCandidates, allele2PrevalentCandidates := getPrevalentAlleleCandidates(loci)
 	lociResult.AmountOfAllelesForErrorCalculation = getAmountOfAllelesForErrorCalculation(loci)
+	lociResult.AmountOfLoci = len(loci)
+	lociResult.AmountOfLociForErrorCalculation = getAmountOfLociForErrorCalculation(loci)
 
 	if len(loci) < 2 {
 		return lociResult
@@ -94,6 +110,21 @@ func getAmountOfAllelesForErrorCalculation(loci []models.Locus) int {
 		}
 
 		if len(locus.Allele2) > 0 {
+			count++
+		}
+	}
+
+	return count
+}
+
+func getAmountOfLociForErrorCalculation(loci []models.Locus) int {
+	count := 0
+
+	for _, locus := range loci {
+		if len(locus.Allele1) > 0 &&
+			len(locus.Allele2) > 0 &&
+			locus.Allele1 != "?" &&
+			locus.Allele2 != "?" {
 			count++
 		}
 	}
@@ -204,21 +235,21 @@ func getPrevalentAlleleResults(allelePrevalentCandidates map[string]int) (string
 }
 
 func getAlleleDropOutAmount(loci []models.Locus) int {
-	amountOfHeterozygots := 0
-	amountOfHomozygots := 0
+	amountOfHeterozygotes := 0
+	amountOfHomozygotes := 0
 
 	for _, locus := range loci {
 		if locus.IsHomozygot() {
-			amountOfHomozygots++
+			amountOfHomozygotes++
 		} else if locus.IsHeterozygot() {
-			amountOfHeterozygots++
+			amountOfHeterozygotes++
 		}
 	}
 
-	if amountOfHomozygots > 0 &&
-		amountOfHeterozygots > 0 &&
-		amountOfHomozygots <= amountOfHeterozygots {
-		return amountOfHomozygots
+	if amountOfHomozygotes > 0 &&
+		amountOfHeterozygotes > 0 &&
+		amountOfHomozygotes <= amountOfHeterozygotes {
+		return amountOfHomozygotes
 	}
 
 	return 0

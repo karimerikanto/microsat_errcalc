@@ -16,4 +16,16 @@ type Result struct {
 	AmountOfErroneousAlleles           int
 	AmountOfAlleles                    int
 	AmountOfAllelesForErrorCalculation int
+	AmountOfHeterozygotes              int
+	AmountOfHomozygotes                int
+	AmountOfAlleleDropouts             int
+	AmountOfOtherErrors                int
+
+	ErrorRate                            float64
+	AlleleDropoutRatePerHeterozygousLoci float64
+	AlleleDropoutRatePerAllLoci          float64
+	AlleleDropoutRatePerAllAlleles       float64
+	OtherErrorRatePerAllLoci             float64
+	OtherErrorRatePerAllAlleles          float64
+	LociErrorRate                        float64
 }
