@@ -3,7 +3,7 @@ package writer
 import (
 	"fmt"
 	"io/ioutil"
-	"karim/microsatellite_analyzer/analyzer/results"
+	"karim/micsat_errcalc/analyzer/results"
 	"strconv"
 	"strings"
 )

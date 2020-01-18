@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"karim/microsatellite_analyzer/analyzer"
-	"karim/microsatellite_analyzer/reader"
-	"karim/microsatellite_analyzer/writer"
+	"karim/micsat_errcalc/analyzer"
+	"karim/micsat_errcalc/reader"
+	"karim/micsat_errcalc/writer"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -67,7 +67,7 @@ func printHelp() {
 	fmt.Println("Microsatellite analyzer (version " + versionName + ")")
 	fmt.Println("")
 	fmt.Println("=== Usage ===")
-	fmt.Println("microsatellite_analyzer.exe <source file path> <output file name (optional)>")
+	fmt.Println("micsat_errcalc.exe <source file path> <output file name (optional)>")
 	fmt.Println("")
 	fmt.Println("=== Notes ===")
 	fmt.Println("Source file should be in csv format (';' as a separator). ',' is a forbidden character.")

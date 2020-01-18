@@ -1,8 +1,8 @@
 package results
 
 import (
-	"karim/microsatellite_analyzer/analyzer/models"
-	"karim/microsatellite_analyzer/utils"
+	"karim/micsat_errcalc/analyzer/models"
+	"karim/micsat_errcalc/utils"
 	"testing"
 )
 

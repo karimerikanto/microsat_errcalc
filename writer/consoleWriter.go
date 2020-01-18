@@ -2,7 +2,7 @@ package writer
 
 import (
 	"fmt"
-	"karim/microsatellite_analyzer/analyzer/results"
+	"karim/micsat_errcalc/analyzer/results"
 	"strconv"
 )
 
