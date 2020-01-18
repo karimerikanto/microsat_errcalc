@@ -11,3 +11,7 @@ TODO: Add more content
 You need to have Go installed in your computer.
 
 After installing Go, clone this repository inside your Go workspace. Then run `go build` or `go install` to get executable binary file.
+
+## Running tests
+
+```go test ./...```
