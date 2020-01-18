@@ -5,7 +5,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
-	"karim/micsat_errcalc/analyzer/models"
+	"karim/microsat_errcalc/analyzer/models"
 	"os"
 )
 

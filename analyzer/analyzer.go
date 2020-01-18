@@ -2,8 +2,8 @@ package analyzer
 
 import (
 	"errors"
-	"karim/micsat_errcalc/analyzer/models"
-	"karim/micsat_errcalc/analyzer/results"
+	"karim/microsat_errcalc/analyzer/models"
+	"karim/microsat_errcalc/analyzer/results"
 )
 
 //GetResultFromImportData analyzes given import data and returns the result object

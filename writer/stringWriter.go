@@ -1,7 +1,7 @@
 package writer
 
 import (
-	"karim/micsat_errcalc/analyzer/results"
+	"karim/microsat_errcalc/analyzer/results"
 	"strconv"
 	"strings"
 )

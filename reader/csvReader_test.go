@@ -1,7 +1,7 @@
 package reader
 
 import (
-	"karim/micsat_errcalc/utils"
+	"karim/microsat_errcalc/utils"
 	"testing"
 )
 

@@ -1,8 +1,8 @@
 package analyzer
 
 import (
-	"karim/micsat_errcalc/analyzer/models"
-	"karim/micsat_errcalc/utils"
+	"karim/microsat_errcalc/analyzer/models"
+	"karim/microsat_errcalc/utils"
 	"testing"
 )
 

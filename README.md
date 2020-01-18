@@ -1,4 +1,4 @@
-# micsat_errcalc
+# microsat_errcalc
 
 ## Summary
 

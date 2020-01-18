@@ -1,7 +1,7 @@
 package results
 
 import (
-	"karim/micsat_errcalc/analyzer/models"
+	"karim/microsat_errcalc/analyzer/models"
 )
 
 // LociResult contains results from given loci
