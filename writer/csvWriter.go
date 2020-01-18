@@ -41,7 +41,7 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 		"Loci error count;" + strconv.Itoa(result.AmountOfErroneousLoci),
 		"Loci error;" + strings.Replace(strconv.FormatFloat(result.LociErrorRate, 'f', 6, 64), ".", ",", -1),
 		"",
-		"SAMPLES;Allele drop outs;Allele drop outs rate;Other errors;Other errors rate;Total error count;Total error rate;Total alleles;Heterozygotes;Homozygotes;Allele dropout rate per heterozygous loci;",
+		"SAMPLES;Allele drop outs;Allele drop outs rate;Other errors;Other errors rate;Total error count;Total error rate;Total alleles;Heterozygotes;Homozygotes;Allele dropout rate per heterozygous loci;Allele dropout rate per all loci;Other error rate per all loci;Amount of loci for error calculation;Amount of erroneous loci;",
 	}
 
 	for _, sampleResult := range result.SampleResults {
@@ -54,6 +54,8 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 			sampleAlleleDropOuts := 0
 			sampleHeterozygotes := 0
 			sampleHomozygotes := 0
+			sampleAmountOfLociForErrorCalculation := 0
+			sampleAmountOfErroneousLoci := 0
 
 			var ambiguousLociResults []results.LociResult
 
@@ -63,6 +65,8 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 				sampleAlleleDropOuts += lociResult.AmountOfAlleleDropOuts
 				sampleHeterozygotes += lociResult.AmountOfHeterozygotes
 				sampleHomozygotes += lociResult.AmountOfHomozygotes
+				sampleAmountOfLociForErrorCalculation += lociResult.AmountOfLociForErrorCalculation
+				sampleAmountOfErroneousLoci += lociResult.AmountOfErroneousLoci
 
 				if lociResult.Ambiguous {
 					ambiguousLociResults = append(ambiguousLociResults, lociResult)
@@ -80,7 +84,11 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 					strconv.Itoa(sampleAlleles)+";"+
 					strconv.Itoa(sampleHeterozygotes)+";"+
 					strconv.Itoa(sampleHomozygotes)+";"+
-					strings.Replace(strconv.FormatFloat(float64(sampleAlleleDropOuts)/float64(sampleHeterozygotes), 'f', 6, 64), ".", ",", -1))
+					strings.Replace(strconv.FormatFloat(float64(sampleAlleleDropOuts)/float64(sampleHeterozygotes), 'f', 6, 64), ".", ",", -1)+";"+
+					strings.Replace(strconv.FormatFloat(float64(sampleAlleleDropOuts)/float64(sampleAmountOfLociForErrorCalculation), 'f', 6, 64), ".", ",", -1)+";"+
+					strings.Replace(strconv.FormatFloat(float64(sampleAmountOfErroneousLoci-sampleAlleleDropOuts)/float64(sampleAmountOfLociForErrorCalculation), 'f', 6, 64), ".", ",", -1)+";"+
+					strconv.Itoa(sampleAmountOfLociForErrorCalculation)+";"+
+					strconv.Itoa(sampleAmountOfErroneousLoci))
 
 			for _, ambiguousLociResult := range ambiguousLociResults {
 				rows = append(rows, "AMBIGUOUS LOCI RESULT ("+ambiguousLociResult.Name+")")
@@ -98,6 +106,8 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 		lociAlleles := 0
 		lociHeterozygotes := 0
 		lociHomozygotes := 0
+		lociAmountOfLociForErrorCalculation := 0
+		lociAmountOfErroneousLoci := 0
 
 		for _, lociResult := range lociResultGroup {
 			lociErrors += lociResult.AmountOfErroneousAlleles
@@ -105,6 +115,8 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 			lociAlleleDropOuts += lociResult.AmountOfAlleleDropOuts
 			lociHeterozygotes += lociResult.AmountOfHeterozygotes
 			lociHomozygotes += lociResult.AmountOfHomozygotes
+			lociAmountOfLociForErrorCalculation += lociResult.AmountOfLociForErrorCalculation
+			lociAmountOfErroneousLoci += lociResult.AmountOfErroneousLoci
 		}
 
 		rows = append(rows,
@@ -118,7 +130,11 @@ func WriteResultsToCsvFile(filePath string, result results.Result) {
 				strconv.Itoa(lociAlleles)+";"+
 				strconv.Itoa(lociHeterozygotes)+";"+
 				strconv.Itoa(lociHomozygotes)+";"+
-				strings.Replace(strconv.FormatFloat(float64(lociAlleleDropOuts)/float64(lociHeterozygotes), 'f', 6, 64), ".", ",", -1))
+				strings.Replace(strconv.FormatFloat(float64(lociAlleleDropOuts)/float64(lociHeterozygotes), 'f', 6, 64), ".", ",", -1)+";"+
+				strings.Replace(strconv.FormatFloat(float64(lociAlleleDropOuts)/float64(lociAmountOfLociForErrorCalculation), 'f', 6, 64), ".", ",", -1)+";"+
+				strings.Replace(strconv.FormatFloat(float64(lociAmountOfErroneousLoci-lociAlleleDropOuts)/float64(lociAmountOfLociForErrorCalculation), 'f', 6, 64), ".", ",", -1)+";"+
+				strconv.Itoa(lociAmountOfLociForErrorCalculation)+";"+
+				strconv.Itoa(lociAmountOfErroneousLoci))
 	}
 
 	for _, row := range rows {
