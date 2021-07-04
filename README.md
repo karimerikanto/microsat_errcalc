@@ -2,10 +2,14 @@
 
 ## Summary
 
-Microsatellite genotyping error rate calculator program which reads samples from CSV file and outputs analyzed results. CSV file contains data in genepop format in which each individual/replicate is separated with a line break.
+Microsatellite genotyping error rate calculator program which reads samples from CSV file and outputs analyzed results.
 
 ### Usage
+
+Example when ran from command line:
 microsat_errcalc.exe <source file path> <output file name (optional)>
+
+Also see Manual.pdf.
 
 ### Notes
 Source file should be in csv format (';' as a separator). ',' is a forbidden character.
